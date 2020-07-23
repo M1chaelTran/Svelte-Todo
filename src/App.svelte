@@ -53,7 +53,7 @@
 </script>
 
 <main class="container mx-auto text-center p-8">
-  <h1 class="mdc-typography--headline2 mb-8">Get things done</h1>
+  <h1 class="mdc-typography--headline2 mb-8">Getting things done</h1>
 
   <div class="flex flex-col mx-auto md:w-2/3">
     <Add onAddTodo={handleAddTodo} />
