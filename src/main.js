@@ -1,4 +1,10 @@
 import App from './App.svelte'
+import '@material/typography/mdc-typography.scss'
+import fakerServer from 'app/fakedb'
+
+if (!__myapp.env.isProd) {
+  fakerServer()
+}
 
 const app = new App({ target: document.body })
 

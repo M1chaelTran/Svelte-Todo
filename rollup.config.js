@@ -5,6 +5,9 @@ import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import path from 'path'
 import postcss from 'rollup-plugin-postcss'
+import alias from '@rollup/plugin-alias'
+import replace from '@rollup/plugin-replace'
+import preprocess from 'svelte-preprocess'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -37,6 +40,27 @@ export default {
     file: 'public/build/bundle.js',
   },
   plugins: [
+    replace({
+      __myapp: JSON.stringify({
+        env: {
+          isProd: production,
+        },
+      }),
+    }),
+
+    alias({
+      entries: [
+        {
+          find: 'app',
+          replacement: path.resolve(__dirname),
+        },
+        {
+          find: '@',
+          replacement: path.resolve(__dirname, 'src/'),
+        },
+      ],
+    }),
+
     svelte({
       // enable run-time checks when not in production
       dev: !production,
@@ -45,6 +69,7 @@ export default {
       css: (css) => {
         css.write('public/build/bundle.css')
       },
+      preprocess: preprocess(),
     }),
 
     // If you have external dependencies installed from
